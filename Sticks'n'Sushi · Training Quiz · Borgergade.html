@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)file:///Users/ivanchristensen/Desktop/sticks_training_quiz_superstar_fixed.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sticks'n'Sushi · Training Quiz · Borgergade</title>
+<link href="./Sticks&#39;n&#39;Sushi · Training Quiz · Borgergade_files/css2" rel="stylesheet">
+<style>
+:root {
+  --bordeaux: #6B1A2A;
+  --bordeaux-dark: #4A0F1C;
+  --bordeaux-light: #8B2A3E;
+  --bordeaux-pale: #F7EAED;
+  --gold: #C9A96E;
+  --gold-light: #E8D5A8;
+  --white: #FDFAF8;
+  --cream: #F2EDE6;
+  --text-dark: #1A0A0F;
+  --text-muted: #5C3D47;
+  --border: rgba(107,26,42,0.13);
+  --correct: #2E7D52;
+  --correct-bg: #E8F5EE;
+  --wrong: #B71C1C;
+  --wrong-bg: #FDECEA;
+  --open-bg: #F9F3EA;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--white);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 4px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--bordeaux), var(--gold));
+  z-index: 1000;
+  transition: width 0.2s ease;
+}
+
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--bordeaux-dark) 0%, var(--bordeaux) 60%, #8B1A30 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(201,169,110,0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '🍣';
+  font-size: 200px;
+  opacity: 0.04;
+  position: absolute;
+  bottom: -40px; right: -20px;
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  animation: fadeUp 0.7s ease both;
+}
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: clamp(48px, 10vw, 88px);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #fff;
+  line-height: 0.92;
+  margin-bottom: 20px;
+  animation: fadeUp 0.7s 0.15s ease both;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 48px;
+  animation: fadeUp 0.7s 0.28s ease both;
+}
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  animation: fadeUp 0.7s 0.4s ease both;
+}
+.hero-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  border: 1.5px solid rgba(201,169,110,0.4);
+  border-radius: 100px;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(201,169,110,0.08);
+}
+.hero-pill:hover, .hero-pill.active {
+  background: var(--gold);
+  color: var(--bordeaux-dark);
+  border-color: var(--gold);
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: fadeUp 0.7s 0.6s ease both;
+}
+.hero-scroll span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 4px;
+  z-index: 900;
+  background: rgba(74,15,28,0.95);
+  backdrop-filter: blur(12px);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  border-bottom: 1px solid rgba(201,169,110,0.15);
+}
+.nav-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.nav-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: all 0.25s;
+  border: none;
+  padding: 0;
+}
+.nav-dot.active {
+  background: var(--gold);
+  transform: scale(1.35);
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.eyebrow-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.eyebrow-line {
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  max-width: 120px;
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 6vw, 52px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--bordeaux-dark);
+  line-height: 0.95;
+  margin-bottom: 14px;
+}
+.section-lead {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 600px;
+  margin-bottom: 36px;
+}
+
+.day-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.day-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: 2px solid var(--bordeaux);
+  background: transparent;
+  color: var(--bordeaux);
+  cursor: pointer;
+  transition: all 0.22s;
+}
+.day-btn:hover, .day-btn.active {
+  background: var(--bordeaux);
+  color: #fff;
+}
+.day-btn.master-btn {
+  border-color: var(--gold);
+  color: var(--gold-light);
+  background: var(--bordeaux-dark);
+}
+.day-btn.master-btn:hover, .day-btn.master-btn.active {
+  background: var(--gold);
+  color: var(--bordeaux-dark);
+  border-color: var(--gold);
+}
+
+.quiz-panel { display: none; }
+.quiz-panel.active { display: block; }
+
+.day-banner {
+  background: linear-gradient(120deg, var(--bordeaux-dark) 0%, var(--bordeaux) 100%);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.day-banner-emoji { font-size: 40px; }
+.day-banner-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+.day-banner-sub {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: var(--gold-light);
+  margin-top: 4px;
+}
+
+.question-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  padding: 28px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.2s;
+}
+.question-card:hover {
+  box-shadow: 0 4px 24px rgba(107,26,42,0.08);
+}
+.q-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.q-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--bordeaux-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.options-grid {
+  display: grid;
+  gap: 10px;
+}
+.option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--cream);
+  cursor: pointer;
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  color: var(--text-dark);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.option-btn .opt-letter {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: rgba(107,26,42,0.1);
+  color: var(--bordeaux);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--bordeaux-light);
+  background: var(--bordeaux-pale);
+}
+.option-btn.correct {
+  border-color: var(--correct);
+  background: var(--correct-bg);
+  color: var(--correct);
+}
+.option-btn.correct .opt-letter {
+  background: var(--correct);
+  color: #fff;
+}
+.option-btn.wrong {
+  border-color: var(--wrong);
+  background: var(--wrong-bg);
+  color: var(--wrong);
+  opacity: 0.75;
+}
+.option-btn.wrong .opt-letter {
+  background: var(--wrong);
+  color: #fff;
+}
+.option-btn:disabled { cursor: default; }
+
+.open-answer-area {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  color: var(--text-dark);
+  resize: vertical;
+  min-height: 90px;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.open-answer-area:focus { border-color: var(--bordeaux-light); }
+.open-answer-area.answered {
+  border-color: var(--bordeaux);
+  background: var(--bordeaux-pale);
+}
+
+.q-submit-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--bordeaux);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 28px;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: background 0.2s, transform 0.15s;
+}
+.q-submit-btn:hover {
+  background: var(--bordeaux-dark);
+  transform: translateY(-1px);
+}
+.q-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+}
+
+.feedback-box {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.feedback-box.correct {
+  background: var(--correct-bg);
+  border-left: 4px solid var(--correct);
+  color: var(--correct);
+}
+.feedback-box.open {
+  background: var(--open-bg);
+  border-left: 4px solid var(--gold);
+  color: var(--text-dark);
+}
+.feedback-box.wrong {
+  background: var(--wrong-bg);
+  border-left: 4px solid var(--wrong);
+  color: var(--wrong);
+}
+.feedback-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.feedback-box.visible { display: block; }
+
+.mark-row {
+  display: none;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.mark-row.visible { display: flex; }
+.mark-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 100px;
+  padding: 9px 20px;
+  cursor: pointer;
+  border: 2px solid;
+  transition: all 0.18s;
+}
+.mark-btn.known {
+  border-color: var(--correct);
+  color: var(--correct);
+  background: transparent;
+}
+.mark-btn.known:hover, .mark-btn.known.selected {
+  background: var(--correct);
+  color: #fff;
+}
+.mark-btn.review {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: transparent;
+}
+.mark-btn.review:hover, .mark-btn.review.selected {
+  background: var(--gold);
+  color: var(--bordeaux-dark);
+}
+
+.results-screen {
+  display: none;
+  text-align: center;
+  padding: 48px 24px;
+  background: linear-gradient(135deg, var(--bordeaux-dark), var(--bordeaux));
+  border-radius: 20px;
+  margin-top: 32px;
+}
+.results-screen.visible { display: block; }
+.results-emoji { font-size: 64px; margin-bottom: 16px; }
+.results-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.results-score {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 72px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.results-score-label {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 24px;
+}
+.results-msg {
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  max-width: 480px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+.focus-areas {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin: 20px auto;
+  max-width: 480px;
+  text-align: left;
+}
+.focus-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.focus-item {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.focus-item:last-child { border: none; }
+.results-retry {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--bordeaux-dark);
+  border: none;
+  border-radius: 100px;
+  padding: 14px 36px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.2s;
+}
+.results-retry:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.quiz-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 14px;
+}
+.quiz-progress-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--bordeaux-pale);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--bordeaux), var(--gold));
+  border-radius: 100px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.quiz-progress-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--bordeaux);
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.q-pip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.q-pip {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  border: 2px solid var(--border);
+  background: var(--cream);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.q-pip.correct { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+.q-pip.wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+.q-pip.open-known { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+.q-pip.open-review { background: #FFF8E1; border-color: var(--gold); color: #7A5C00; }
+.q-pip.current { border-color: var(--bordeaux); color: var(--bordeaux); }
+
+.footer-section {
+  background: linear-gradient(160deg, var(--bordeaux-dark) 0%, var(--bordeaux) 100%);
+  padding: 80px 24px;
+  text-align: center;
+}
+.footer-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: clamp(42px, 9vw, 80px);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #fff;
+  line-height: 0.95;
+  margin-bottom: 20px;
+}
+.footer-title span { color: var(--gold); }
+.footer-sub {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 36px;
+}
+.footer-badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  border-radius: 100px;
+  padding: 10px 28px;
+}
+.footer-values {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.footer-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.footer-value.highlight { color: var(--gold-light); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+
+/* MASTER QUIZ INSIGHT DASHBOARD */
+.master-insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  max-width: 720px;
+  margin: 24px auto;
+}
+.master-insight-card {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(201,169,110,0.22);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: left;
+}
+.master-insight-day {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.master-insight-score {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.master-insight-bar {
+  width: 100%;
+  height: 7px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.master-insight-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+}
+.master-insight-status {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.35;
+}
+.master-focus-list {
+  max-width: 720px;
+  margin: 18px auto 0;
+  background: rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 18px 22px;
+  text-align: left;
+}
+.master-focus-list-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.master-focus-list-item {
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.86);
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+.master-focus-list-item:last-child { border-bottom: none; }
+
+@media (max-width: 620px) {
+  .day-selector { gap: 8px; }
+  .day-btn { font-size: 11px; padding: 8px 14px; }
+  .day-banner { padding: 20px; gap: 14px; }
+  .day-banner-title { font-size: 20px; }
+  .question-card { padding: 20px; }
+  .q-text { font-size: 17px; }
+  .sticky-nav { padding: 0 16px; }
+  .section { padding: 56px 0 40px; }
+}
+
+.master-banner {
+  background: linear-gradient(120deg, #1A0A0F 0%, var(--bordeaux-dark) 60%, #6B1A2A 100%);
+  border: 2px solid var(--gold);
+}
+.master-banner .day-banner-title { color: var(--gold); }
+
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+
+.open-hint {
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar" style="width: 9.85405%;"></div>
+
+<section class="hero" id="top">
+  <div class="hero-eyebrow">Sticks'n'Sushi · Borgergade · Training Programme</div>
+  <h1>Day <span>1–7</span><br>Training<br>Quiz</h1>
+  <p class="hero-sub">Test your knowledge, grow every day — omotenashi starts here.</p>
+  <div class="hero-pills" id="hero-pills"><button class="hero-pill">Day 1</button><button class="hero-pill">Day 2</button><button class="hero-pill">Day 3</button><button class="hero-pill">Day 4</button><button class="hero-pill">Day 5</button><button class="hero-pill">Day 6</button><button class="hero-pill">Day 7</button><button class="hero-pill">Super Star Quiz 🔒</button></div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll to begin</span>
+  </div>
+</section>
+
+<nav class="sticky-nav">
+  <div class="nav-brand">Sticks'n'Sushi · Quiz</div>
+  <div class="nav-dots" id="nav-dots"><button class="nav-dot active" id="dot-0" title="Day 1"></button><button class="nav-dot" id="dot-1" title="Day 2"></button><button class="nav-dot" id="dot-2" title="Day 3"></button><button class="nav-dot" id="dot-3" title="Day 4"></button><button class="nav-dot" id="dot-4" title="Day 5"></button><button class="nav-dot" id="dot-5" title="Day 6"></button><button class="nav-dot" id="dot-6" title="Day 7"></button><button class="nav-dot" id="dot-7" title="Super Star Quiz"></button></div>
+</nav>
+
+<div class="container">
+  <section class="section visible" id="quiz-section">
+    <div class="eyebrow">
+      <span class="eyebrow-text">Interactive Training</span>
+      <div class="eyebrow-line"></div>
+    </div>
+    <h2 class="section-title">Your Daily Quiz</h2>
+    <p class="section-lead">Select a day below and answer each question. Open questions require you to self-assess — be honest with yourself. At the end of each quiz, you'll see exactly where to focus.</p>
+
+    <div class="day-selector" id="day-selector"><button class="day-btn active" id="daybtn-day1">Day 1</button><button class="day-btn" id="daybtn-day2">Day 2</button><button class="day-btn" id="daybtn-day3">Day 3</button><button class="day-btn" id="daybtn-day4">Day 4</button><button class="day-btn" id="daybtn-day5">Day 5</button><button class="day-btn" id="daybtn-day6">Day 6</button><button class="day-btn" id="daybtn-day7">Day 7</button><button class="day-btn master-btn" id="daybtn-superstar">Super Star Quiz 🔒</button></div>
+
+    <div id="quiz-panels"><div class="quiz-panel active" id="panel-day1"><div class="day-banner">
+    <div class="day-banner-emoji">🌸</div>
+    <div>
+      <div class="day-banner-title">Day 1</div>
+      <div class="day-banner-sub">5 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day1"></div></div>
+    <div class="quiz-progress-label" id="qpl-day1">0 / 5</div></div><div class="q-pip-row" id="pips-day1"><div class="q-pip" id="pip-day1-0">1</div><div class="q-pip" id="pip-day1-1">2</div><div class="q-pip" id="pip-day1-2">3</div><div class="q-pip" id="pip-day1-3">4</div><div class="q-pip" id="pip-day1-4">5</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day1-0">
+    <div class="q-number">Question 1 of 5</div>
+    <div class="q-text">What does "Irasshaimase" mean?</div><div class="options-grid" id="opts-day1-0"><button class="option-btn" id="opt-day1-0-0"><span class="opt-letter">A</span><span>Thank you for the meal</span></button><button class="option-btn" id="opt-day1-0-1"><span class="opt-letter">B</span><span>Welcome to our home</span></button><button class="option-btn" id="opt-day1-0-2"><span class="opt-letter">C</span><span>Goodbye</span></button><button class="option-btn" id="opt-day1-0-3"><span class="opt-letter">D</span><span>Sorry</span></button></div><div class="feedback-box" id="fb-day1-0"></div></div><div class="question-card" id="qcard-day1-1">
+    <div class="q-number">Question 2 of 5</div>
+    <div class="q-text">Name our 3 core values and give a short description of each.</div><div class="open-hint">💡 Think about the values that guide how we work, serve guests, improve every day, and go the extra mile.</div><textarea class="open-answer-area" id="ta-day1-1" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day1-1">Check Answer →</button><div class="feedback-box" id="fb-day1-1"></div><div class="mark-row" id="mark-day1-1">
+      <button class="mark-btn known" onclick="markOpen(&#39;day1&#39;,1,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day1&#39;,1,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day1-2">
+    <div class="q-number">Question 3 of 5</div>
+    <div class="q-text">Name the 9 steps of OKI NI (Set the Scene).</div><div class="open-hint">💡 From IRASSHAIMASE to MATA DOZO — all 9 steps in order.</div><textarea class="open-answer-area" id="ta-day1-2" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day1-2">Check Answer →</button><div class="feedback-box" id="fb-day1-2"></div><div class="mark-row" id="mark-day1-2">
+      <button class="mark-btn known" onclick="markOpen(&#39;day1&#39;,2,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day1&#39;,2,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day1-3">
+    <div class="q-number">Question 4 of 5</div>
+    <div class="q-text">Name 2 smiling points during service.</div><div class="open-hint">💡 These are specific moments where a genuine smile must always be present.</div><textarea class="open-answer-area" id="ta-day1-3" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day1-3">Check Answer →</button><div class="feedback-box" id="fb-day1-3"></div><div class="mark-row" id="mark-day1-3">
+      <button class="mark-btn known" onclick="markOpen(&#39;day1&#39;,3,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day1&#39;,3,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day1-4">
+    <div class="q-number">Question 5 of 5</div>
+    <div class="q-text">Give at least 2 examples of going "the extra mile" (Mérydelser) during service.</div><div class="open-hint">💡 Think about small, unexpected gestures that make a guest feel truly seen.</div><textarea class="open-answer-area" id="ta-day1-4" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day1-4">Check Answer →</button><div class="feedback-box" id="fb-day1-4"></div><div class="mark-row" id="mark-day1-4">
+      <button class="mark-btn known" onclick="markOpen(&#39;day1&#39;,4,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day1&#39;,4,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="results-screen" id="results-day1"></div></div><div class="quiz-panel" id="panel-day2"><div class="day-banner">
+    <div class="day-banner-emoji">🏮</div>
+    <div>
+      <div class="day-banner-title">Day 2</div>
+      <div class="day-banner-sub">4 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day2"></div></div>
+    <div class="quiz-progress-label" id="qpl-day2">0 / 4</div></div><div class="q-pip-row" id="pips-day2"><div class="q-pip" id="pip-day2-0">1</div><div class="q-pip" id="pip-day2-1">2</div><div class="q-pip" id="pip-day2-2">3</div><div class="q-pip" id="pip-day2-3">4</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day2-0">
+    <div class="q-number">Question 1 of 4</div>
+    <div class="q-text">What does "Omotenashi" teach us about how we should treat our guests? Explain in your own words.</div><div class="open-hint">💡 Think about attentiveness, reading the room, and selfless hospitality.</div><textarea class="open-answer-area" id="ta-day2-0" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day2-0">Check Answer →</button><div class="feedback-box" id="fb-day2-0"></div><div class="mark-row" id="mark-day2-0">
+      <button class="mark-btn known" onclick="markOpen(&#39;day2&#39;,0,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day2&#39;,0,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day2-1">
+    <div class="q-number">Question 2 of 4</div>
+    <div class="q-text">What does SOS stand for at Sticks'n'Sushi?</div><div class="options-grid" id="opts-day2-1"><button class="option-btn" id="opt-day2-1-0"><span class="opt-letter">A</span><span>Soya, Oshibori, Sharing plate</span></button><button class="option-btn" id="opt-day2-1-1"><span class="opt-letter">B</span><span>Service, Order, Smile</span></button><button class="option-btn" id="opt-day2-1-2"><span class="opt-letter">C</span><span>Set, Offer, Serve</span></button><button class="option-btn" id="opt-day2-1-3"><span class="opt-letter">D</span><span>Start, Open, Suggest</span></button></div><div class="feedback-box" id="fb-day2-1"></div></div><div class="question-card" id="qcard-day2-2">
+    <div class="q-number">Question 3 of 4</div>
+    <div class="q-text">What does DCT stand for?</div><div class="options-grid" id="opts-day2-2"><button class="option-btn" id="opt-day2-2-0"><span class="opt-letter">A</span><span>Daily Customer Tracking</span></button><button class="option-btn" id="opt-day2-2-1"><span class="opt-letter">B</span><span>Dessert Card Trick / Dessert Coffee Tea</span></button><button class="option-btn" id="opt-day2-2-2"><span class="opt-letter">C</span><span>Drink Check Time</span></button><button class="option-btn" id="opt-day2-2-3"><span class="opt-letter">D</span><span>Direct Customer Touch</span></button></div><div class="feedback-box" id="fb-day2-2"></div></div><div class="question-card" id="qcard-day2-3">
+    <div class="q-number">Question 4 of 4</div>
+    <div class="q-text">What Japanese words or phrases have you learned today? Write as many as you can.</div><div class="open-hint">💡 Any Japanese hospitality phrases or words you remember — all count!</div><textarea class="open-answer-area" id="ta-day2-3" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day2-3">Check Answer →</button><div class="feedback-box" id="fb-day2-3"></div><div class="mark-row" id="mark-day2-3">
+      <button class="mark-btn known" onclick="markOpen(&#39;day2&#39;,3,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day2&#39;,3,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="results-screen" id="results-day2"></div></div><div class="quiz-panel" id="panel-day3"><div class="day-banner">
+    <div class="day-banner-emoji">🐟</div>
+    <div>
+      <div class="day-banner-title">Day 3</div>
+      <div class="day-banner-sub">5 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day3"></div></div>
+    <div class="quiz-progress-label" id="qpl-day3">0 / 5</div></div><div class="q-pip-row" id="pips-day3"><div class="q-pip" id="pip-day3-0">1</div><div class="q-pip" id="pip-day3-1">2</div><div class="q-pip" id="pip-day3-2">3</div><div class="q-pip" id="pip-day3-3">4</div><div class="q-pip" id="pip-day3-4">5</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day3-0">
+    <div class="q-number">Question 1 of 5</div>
+    <div class="q-text">Briefly explain what "Guess the Guest" means and why it's important.</div><div class="open-hint">💡 Think about signals, pace, privacy, and tailoring the experience.</div><textarea class="open-answer-area" id="ta-day3-0" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day3-0">Check Answer →</button><div class="feedback-box" id="fb-day3-0"></div><div class="mark-row" id="mark-day3-0">
+      <button class="mark-btn known" onclick="markOpen(&#39;day3&#39;,0,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day3&#39;,0,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day3-1">
+    <div class="q-number">Question 2 of 5</div>
+    <div class="q-text">Where does our Shake (salmon) come from?</div><div class="options-grid" id="opts-day3-1"><button class="option-btn" id="opt-day3-1-0"><span class="opt-letter">A</span><span>Scotland</span></button><button class="option-btn" id="opt-day3-1-1"><span class="opt-letter">B</span><span>Iceland</span></button><button class="option-btn" id="opt-day3-1-2"><span class="opt-letter">C</span><span>Norway</span></button><button class="option-btn" id="opt-day3-1-3"><span class="opt-letter">D</span><span>Denmark</span></button></div><div class="feedback-box" id="fb-day3-1"></div></div><div class="question-card" id="qcard-day3-2">
+    <div class="q-number">Question 3 of 5</div>
+    <div class="q-text">Where does our Hiramasa (yellowtail) come from?</div><div class="options-grid" id="opts-day3-2"><button class="option-btn" id="opt-day3-2-0"><span class="opt-letter">A</span><span>Japan</span></button><button class="option-btn" id="opt-day3-2-1"><span class="opt-letter">B</span><span>Denmark</span></button><button class="option-btn" id="opt-day3-2-2"><span class="opt-letter">C</span><span>Norway</span></button><button class="option-btn" id="opt-day3-2-3"><span class="opt-letter">D</span><span>Alaska</span></button></div><div class="feedback-box" id="fb-day3-2"></div></div><div class="question-card" id="qcard-day3-3">
+    <div class="q-number">Question 4 of 5</div>
+    <div class="q-text">If someone says "Hiramasa Kama is Shimeru," what does it mean?</div><div class="options-grid" id="opts-day3-3"><button class="option-btn" id="opt-day3-3-0"><span class="opt-letter">A</span><span>The Hiramasa is very fresh today</span></button><button class="option-btn" id="opt-day3-3-1"><span class="opt-letter">B</span><span>We are out of / no longer have this item</span></button><button class="option-btn" id="opt-day3-3-2"><span class="opt-letter">C</span><span>The Hiramasa is a special recommendation</span></button><button class="option-btn" id="opt-day3-3-3"><span class="opt-letter">D</span><span>It's time to order more Hiramasa</span></button></div><div class="feedback-box" id="fb-day3-3"></div></div><div class="question-card" id="qcard-day3-4">
+    <div class="q-number">Question 5 of 5</div>
+    <div class="q-text">What is the VIP order when serving guests?</div><div class="options-grid" id="opts-day3-4"><button class="option-btn" id="opt-day3-4-0"><span class="opt-letter">A</span><span>Only wealthy guests get priority</span></button><button class="option-btn" id="opt-day3-4-1"><span class="opt-letter">B</span><span>Children first, then ladies, then men (by age)</span></button><button class="option-btn" id="opt-day3-4-2"><span class="opt-letter">C</span><span>Whoever ordered first</span></button><button class="option-btn" id="opt-day3-4-3"><span class="opt-letter">D</span><span>Adults first, then children</span></button></div><div class="feedback-box" id="fb-day3-4"></div></div><div class="results-screen" id="results-day3"></div></div><div class="quiz-panel" id="panel-day4"><div class="day-banner">
+    <div class="day-banner-emoji">🍱</div>
+    <div>
+      <div class="day-banner-title">Day 4</div>
+      <div class="day-banner-sub">5 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day4"></div></div>
+    <div class="quiz-progress-label" id="qpl-day4">0 / 5</div></div><div class="q-pip-row" id="pips-day4"><div class="q-pip" id="pip-day4-0">1</div><div class="q-pip" id="pip-day4-1">2</div><div class="q-pip" id="pip-day4-2">3</div><div class="q-pip" id="pip-day4-3">4</div><div class="q-pip" id="pip-day4-4">5</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day4-0">
+    <div class="q-number">Question 1 of 5</div>
+    <div class="q-text">Which 2 à la carte starters contain Ponzu Soya?</div><div class="options-grid" id="opts-day4-0"><button class="option-btn" id="opt-day4-0-0"><span class="opt-letter">A</span><span>Seaweed Salad &amp; Maguro Sashimi</span></button><button class="option-btn" id="opt-day4-0-1"><span class="opt-letter">B</span><span>Shake Tataki &amp; Beef Tataki</span></button><button class="option-btn" id="opt-day4-0-2"><span class="opt-letter">C</span><span>Broccoli &amp; Hotate Kataifi</span></button><button class="option-btn" id="opt-day4-0-3"><span class="opt-letter">D</span><span>Kani Koroke &amp; Kinoko Koroke</span></button></div><div class="feedback-box" id="fb-day4-0"></div></div><div class="question-card" id="qcard-day4-1">
+    <div class="q-number">Question 2 of 5</div>
+    <div class="q-text">What dressing does the Kani Koroke contain?</div><div class="options-grid" id="opts-day4-1"><button class="option-btn" id="opt-day4-1-0"><span class="opt-letter">A</span><span>Miso Aioli</span></button><button class="option-btn" id="opt-day4-1-1"><span class="opt-letter">B</span><span>Ponzu Soya</span></button><button class="option-btn" id="opt-day4-1-2"><span class="opt-letter">C</span><span>Wasabi Caesar</span></button><button class="option-btn" id="opt-day4-1-3"><span class="opt-letter">D</span><span>Spicy Mayo</span></button></div><div class="feedback-box" id="fb-day4-1"></div></div><div class="question-card" id="qcard-day4-2">
+    <div class="q-number">Question 3 of 5</div>
+    <div class="q-text">Name 3 maki rolls that contain spicy sauce.</div><div class="open-hint">💡 Think about the rolls with heat in them — "spicy" is a key descriptor.</div><textarea class="open-answer-area" id="ta-day4-2" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day4-2">Check Answer →</button><div class="feedback-box" id="fb-day4-2"></div><div class="mark-row" id="mark-day4-2">
+      <button class="mark-btn known" onclick="markOpen(&#39;day4&#39;,2,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day4&#39;,2,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day4-3">
+    <div class="q-number">Question 4 of 5</div>
+    <div class="q-text">When presenting Sashimi Deluxe, what 2 things must you ALWAYS mention?</div><div class="options-grid" id="opts-day4-3"><button class="option-btn" id="opt-day4-3-0"><span class="opt-letter">A</span><span>Price and portion size</span></button><button class="option-btn" id="opt-day4-3-1"><span class="opt-letter">B</span><span>Supreme Soya for the sashimi &amp; Ponzu for the china radish roll</span></button><button class="option-btn" id="opt-day4-3-2"><span class="opt-letter">C</span><span>The fish origins and freshness</span></button><button class="option-btn" id="opt-day4-3-3"><span class="opt-letter">D</span><span>The chef's recommendation and allergens</span></button></div><div class="feedback-box" id="fb-day4-3"></div></div><div class="question-card" id="qcard-day4-4">
+    <div class="q-number">Question 5 of 5</div>
+    <div class="q-text">Supreme Soya consists of soya + 2 other ingredients. What are they?</div><div class="options-grid" id="opts-day4-4"><button class="option-btn" id="opt-day4-4-0"><span class="opt-letter">A</span><span>Chilli &amp; Sesame</span></button><button class="option-btn" id="opt-day4-4-1"><span class="opt-letter">B</span><span>Ginger &amp; Garlic</span></button><button class="option-btn" id="opt-day4-4-2"><span class="opt-letter">C</span><span>Wasabi &amp; Mirin</span></button><button class="option-btn" id="opt-day4-4-3"><span class="opt-letter">D</span><span>Rice vinegar &amp; Sake</span></button></div><div class="feedback-box" id="fb-day4-4"></div></div><div class="results-screen" id="results-day4"></div></div><div class="quiz-panel" id="panel-day5"><div class="day-banner">
+    <div class="day-banner-emoji">🍹</div>
+    <div>
+      <div class="day-banner-title">Day 5</div>
+      <div class="day-banner-sub">5 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day5"></div></div>
+    <div class="quiz-progress-label" id="qpl-day5">0 / 5</div></div><div class="q-pip-row" id="pips-day5"><div class="q-pip" id="pip-day5-0">1</div><div class="q-pip" id="pip-day5-1">2</div><div class="q-pip" id="pip-day5-2">3</div><div class="q-pip" id="pip-day5-3">4</div><div class="q-pip" id="pip-day5-4">5</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day5-0">
+    <div class="q-number">Question 1 of 5</div>
+    <div class="q-text">What does B.L.A.S.T. stand for?</div><div class="options-grid" id="opts-day5-0"><button class="option-btn" id="opt-day5-0-0"><span class="opt-letter">A</span><span>Be Loud And Stay Thankful</span></button><button class="option-btn" id="opt-day5-0-1"><span class="opt-letter">B</span><span>Believe, Listen, Apologies, Solve, Thank you</span></button><button class="option-btn" id="opt-day5-0-2"><span class="opt-letter">C</span><span>Brief, Light, Attentive, Smile, Trust</span></button><button class="option-btn" id="opt-day5-0-3"><span class="opt-letter">D</span><span>Bring, Lead, Answer, Serve, Teach</span></button></div><div class="feedback-box" id="fb-day5-0"></div></div><div class="question-card" id="qcard-day5-1">
+    <div class="q-number">Question 2 of 5</div>
+    <div class="q-text">What should you do if you hear "Kampai, Onegai" in the restaurant?</div><div class="open-hint">💡 This is a signal from the bar — what does it mean for the floor team?</div><textarea class="open-answer-area" id="ta-day5-1" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day5-1">Check Answer →</button><div class="feedback-box" id="fb-day5-1"></div><div class="mark-row" id="mark-day5-1">
+      <button class="mark-btn known" onclick="markOpen(&#39;day5&#39;,1,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day5&#39;,1,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day5-2">
+    <div class="q-number">Question 3 of 5</div>
+    <div class="q-text">Name 2 drinks or cocktails that contain yuzu.</div><div class="open-hint">💡 Yuzu is a Japanese citrus — think of refreshing, citrusy drinks on the menu.</div><textarea class="open-answer-area" id="ta-day5-2" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day5-2">Check Answer →</button><div class="feedback-box" id="fb-day5-2"></div><div class="mark-row" id="mark-day5-2">
+      <button class="mark-btn known" onclick="markOpen(&#39;day5&#39;,2,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day5&#39;,2,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day5-3">
+    <div class="q-number">Question 4 of 5</div>
+    <div class="q-text">What is the story behind the Mama Mia Roll?</div><div class="open-hint">💡 Think about one of our founders and a pregnancy craving...</div><textarea class="open-answer-area" id="ta-day5-3" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day5-3">Check Answer →</button><div class="feedback-box" id="fb-day5-3"></div><div class="mark-row" id="mark-day5-3">
+      <button class="mark-btn known" onclick="markOpen(&#39;day5&#39;,3,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day5&#39;,3,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day5-4">
+    <div class="q-number">Question 5 of 5</div>
+    <div class="q-text">Name 2 house cocktails from our menu (with 1–2 ingredients each).</div><div class="open-hint">💡 Both alcoholic and non-alcoholic options count!</div><textarea class="open-answer-area" id="ta-day5-4" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day5-4">Check Answer →</button><div class="feedback-box" id="fb-day5-4"></div><div class="mark-row" id="mark-day5-4">
+      <button class="mark-btn known" onclick="markOpen(&#39;day5&#39;,4,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day5&#39;,4,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="results-screen" id="results-day5"></div></div><div class="quiz-panel" id="panel-day6"><div class="day-banner">
+    <div class="day-banner-emoji">🍷</div>
+    <div>
+      <div class="day-banner-title">Day 6</div>
+      <div class="day-banner-sub">5 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day6"></div></div>
+    <div class="quiz-progress-label" id="qpl-day6">0 / 5</div></div><div class="q-pip-row" id="pips-day6"><div class="q-pip" id="pip-day6-0">1</div><div class="q-pip" id="pip-day6-1">2</div><div class="q-pip" id="pip-day6-2">3</div><div class="q-pip" id="pip-day6-3">4</div><div class="q-pip" id="pip-day6-4">5</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day6-0">
+    <div class="q-number">Question 1 of 5</div>
+    <div class="q-text">Name 3 different maki rolls, their main ingredients, and their dressing.</div><div class="open-hint">💡 At least 3 rolls, 1–2 ingredients each, and 1 dressing minimum.</div><textarea class="open-answer-area" id="ta-day6-0" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day6-0">Check Answer →</button><div class="feedback-box" id="fb-day6-0"></div><div class="mark-row" id="mark-day6-0">
+      <button class="mark-btn known" onclick="markOpen(&#39;day6&#39;,0,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day6&#39;,0,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day6-1">
+    <div class="q-number">Question 2 of 5</div>
+    <div class="q-text">Does soy sauce contain gluten or alcohol?</div><div class="options-grid" id="opts-day6-1"><button class="option-btn" id="opt-day6-1-0"><span class="opt-letter">A</span><span>It contains gluten</span></button><button class="option-btn" id="opt-day6-1-1"><span class="opt-letter">B</span><span>It contains alcohol</span></button><button class="option-btn" id="opt-day6-1-2"><span class="opt-letter">C</span><span>It contains both gluten and alcohol</span></button><button class="option-btn" id="opt-day6-1-3"><span class="opt-letter">D</span><span>It contains neither</span></button></div><div class="feedback-box" id="fb-day6-1"></div></div><div class="question-card" id="qcard-day6-2">
+    <div class="q-number">Question 3 of 5</div>
+    <div class="q-text">What is the difference between Champagne and Spumante?</div><div class="options-grid" id="opts-day6-2"><button class="option-btn" id="opt-day6-2-0"><span class="opt-letter">A</span><span>Champagne is cheaper; Spumante is premium Italian</span></button><button class="option-btn" id="opt-day6-2-1"><span class="opt-letter">B</span><span>Champagne is only from the Champagne region of France (strict rules, complex). Spumante is a broad Italian category — lighter and fresher</span></button><button class="option-btn" id="opt-day6-2-2"><span class="opt-letter">C</span><span>They are the same thing, just different names</span></button><button class="option-btn" id="opt-day6-2-3"><span class="opt-letter">D</span><span>Champagne is white; Spumante can be rosé only</span></button></div><div class="feedback-box" id="fb-day6-2"></div></div><div class="question-card" id="qcard-day6-3">
+    <div class="q-number">Question 4 of 5</div>
+    <div class="q-text">Name 2 white wines we have by the glass. Describe each in your own words.</div><div class="open-hint">💡 Your own words — guest-friendly language. Think about flavour, feeling, or food pairings.</div><textarea class="open-answer-area" id="ta-day6-3" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day6-3">Check Answer →</button><div class="feedback-box" id="fb-day6-3"></div><div class="mark-row" id="mark-day6-3">
+      <button class="mark-btn known" onclick="markOpen(&#39;day6&#39;,3,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day6&#39;,3,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day6-4">
+    <div class="q-number">Question 5 of 5</div>
+    <div class="q-text">What 2 key ingredients go into a Shojito?</div><div class="open-hint">💡 Think Japanese twist on a classic cocktail...</div><textarea class="open-answer-area" id="ta-day6-4" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day6-4">Check Answer →</button><div class="feedback-box" id="fb-day6-4"></div><div class="mark-row" id="mark-day6-4">
+      <button class="mark-btn known" onclick="markOpen(&#39;day6&#39;,4,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day6&#39;,4,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="results-screen" id="results-day6"></div></div><div class="quiz-panel" id="panel-day7"><div class="day-banner">
+    <div class="day-banner-emoji">🎌</div>
+    <div>
+      <div class="day-banner-title">Day 7</div>
+      <div class="day-banner-sub">6 questions · Self-paced · Mobile friendly</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-day7"></div></div>
+    <div class="quiz-progress-label" id="qpl-day7">0 / 6</div></div><div class="q-pip-row" id="pips-day7"><div class="q-pip" id="pip-day7-0">1</div><div class="q-pip" id="pip-day7-1">2</div><div class="q-pip" id="pip-day7-2">3</div><div class="q-pip" id="pip-day7-3">4</div><div class="q-pip" id="pip-day7-4">5</div><div class="q-pip" id="pip-day7-5">6</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-day7-0">
+    <div class="q-number">Question 1 of 6</div>
+    <div class="q-text">What are the Japanese numbers 1–10? (Spelling mistakes are OK!)</div><div class="open-hint">💡 ICHI, NI... take it from there!</div><textarea class="open-answer-area" id="ta-day7-0" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day7-0">Check Answer →</button><div class="feedback-box" id="fb-day7-0"></div><div class="mark-row" id="mark-day7-0">
+      <button class="mark-btn known" onclick="markOpen(&#39;day7&#39;,0,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day7&#39;,0,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day7-1">
+    <div class="q-number">Question 2 of 6</div>
+    <div class="q-text">How do you answer the phone at Sticks'n'Sushi?</div><div class="open-hint">💡 There's a specific greeting formula — do you remember it?</div><textarea class="open-answer-area" id="ta-day7-1" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day7-1">Check Answer →</button><div class="feedback-box" id="fb-day7-1"></div><div class="mark-row" id="mark-day7-1">
+      <button class="mark-btn known" onclick="markOpen(&#39;day7&#39;,1,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day7&#39;,1,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day7-2">
+    <div class="q-number">Question 3 of 6</div>
+    <div class="q-text">What should you do when you see guests standing at the front door?</div><div class="open-hint">💡 Speed and warmth are both key here.</div><textarea class="open-answer-area" id="ta-day7-2" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day7-2">Check Answer →</button><div class="feedback-box" id="fb-day7-2"></div><div class="mark-row" id="mark-day7-2">
+      <button class="mark-btn known" onclick="markOpen(&#39;day7&#39;,2,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day7&#39;,2,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day7-3">
+    <div class="q-number">Question 4 of 6</div>
+    <div class="q-text">A table of 2 who love fish asks for a personal recommendation from the menu. What do you suggest and why?</div><div class="open-hint">💡 Your genuine recommendation — explain your reasoning like you would to a real guest.</div><textarea class="open-answer-area" id="ta-day7-3" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-day7-3">Check Answer →</button><div class="feedback-box" id="fb-day7-3"></div><div class="mark-row" id="mark-day7-3">
+      <button class="mark-btn known" onclick="markOpen(&#39;day7&#39;,3,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;day7&#39;,3,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-day7-4">
+    <div class="q-number">Question 5 of 6</div>
+    <div class="q-text">What does P&amp;O stand for?</div><div class="options-grid" id="opts-day7-4"><button class="option-btn" id="opt-day7-4-0"><span class="opt-letter">A</span><span>Pour and Offer</span></button><button class="option-btn" id="opt-day7-4-1"><span class="opt-letter">B</span><span>Prepare and Organise</span></button><button class="option-btn" id="opt-day7-4-2"><span class="opt-letter">C</span><span>Plate and Order</span></button><button class="option-btn" id="opt-day7-4-3"><span class="opt-letter">D</span><span>Present and Observe</span></button></div><div class="feedback-box" id="fb-day7-4"></div></div><div class="question-card" id="qcard-day7-5">
+    <div class="q-number">Question 6 of 6</div>
+    <div class="q-text">What does SOS stand for at Sticks'n'Sushi?</div><div class="options-grid" id="opts-day7-5"><button class="option-btn" id="opt-day7-5-0"><span class="opt-letter">A</span><span>Set, Offer, Serve</span></button><button class="option-btn" id="opt-day7-5-1"><span class="opt-letter">B</span><span>Soya, Oshibori, Sharing plate</span></button><button class="option-btn" id="opt-day7-5-2"><span class="opt-letter">C</span><span>Smile, Order, Suggest</span></button><button class="option-btn" id="opt-day7-5-3"><span class="opt-letter">D</span><span>Standard Operating Service</span></button></div><div class="feedback-box" id="fb-day7-5"></div></div><div class="results-screen" id="results-day7"></div></div><div class="quiz-panel" id="panel-superstar"><div class="day-banner master-banner">
+    <div class="day-banner-emoji">⭐</div>
+    <div>
+      <div class="day-banner-title">Super Star Quiz</div>
+      <div class="day-banner-sub">30 questions · 64 points total · Pass requirement: 51 points (80%)</div>
+    </div></div><div class="quiz-progress-row">
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-superstar" style="width: 3.33333%;"></div></div>
+    <div class="quiz-progress-label" id="qpl-superstar">1 / 30</div></div><div class="q-pip-row" id="pips-superstar"><div class="q-pip open-review" id="pip-superstar-0">1</div><div class="q-pip" id="pip-superstar-1">2</div><div class="q-pip" id="pip-superstar-2">3</div><div class="q-pip" id="pip-superstar-3">4</div><div class="q-pip" id="pip-superstar-4">5</div><div class="q-pip" id="pip-superstar-5">6</div><div class="q-pip" id="pip-superstar-6">7</div><div class="q-pip" id="pip-superstar-7">8</div><div class="q-pip" id="pip-superstar-8">9</div><div class="q-pip" id="pip-superstar-9">10</div><div class="q-pip" id="pip-superstar-10">11</div><div class="q-pip" id="pip-superstar-11">12</div><div class="q-pip" id="pip-superstar-12">13</div><div class="q-pip" id="pip-superstar-13">14</div><div class="q-pip" id="pip-superstar-14">15</div><div class="q-pip" id="pip-superstar-15">16</div><div class="q-pip" id="pip-superstar-16">17</div><div class="q-pip" id="pip-superstar-17">18</div><div class="q-pip" id="pip-superstar-18">19</div><div class="q-pip" id="pip-superstar-19">20</div><div class="q-pip" id="pip-superstar-20">21</div><div class="q-pip" id="pip-superstar-21">22</div><div class="q-pip" id="pip-superstar-22">23</div><div class="q-pip" id="pip-superstar-23">24</div><div class="q-pip" id="pip-superstar-24">25</div><div class="q-pip" id="pip-superstar-25">26</div><div class="q-pip" id="pip-superstar-26">27</div><div class="q-pip" id="pip-superstar-27">28</div><div class="q-pip" id="pip-superstar-28">29</div><div class="q-pip" id="pip-superstar-29">30</div></div><div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div></div><div class="question-card" id="qcard-superstar-0">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">GENERAL KNOWLEDGE</span> Question 1 of 30 · 1 point</div>
+    <div class="q-text">What does 'Irasshaimase' mean?</div><div class="open-hint">💡 Think about the first Japanese greeting we give when guests arrive.</div><textarea class="open-answer-area answered" id="ta-superstar-0" placeholder="Write your answer here..." disabled=""></textarea><button class="q-submit-btn" id="sub-superstar-0" disabled="">Check Answer →</button><div class="feedback-box visible open" id="fb-superstar-0"><div class="feedback-title">📋 Model Answer</div>Welcome to our home / Welcome — Japanese greeting to guests.</div><div class="mark-row visible" id="mark-superstar-0">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,0,&#39;open-known&#39;)" disabled="">✓ Approved from senpai</button>
+      <button class="mark-btn review selected" onclick="markOpen(&#39;superstar&#39;,0,&#39;open-review&#39;)" disabled="">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-1">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">GENERAL KNOWLEDGE</span> Question 2 of 30 · 3 points</div>
+    <div class="q-text">Name the 3 core values of Sticks'n'Sushi.</div><div class="open-hint">💡 Think about quality, going the extra mile, and continuous improvement.</div><textarea class="open-answer-area" id="ta-superstar-1" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-1">Check Answer →</button><div class="feedback-box" id="fb-superstar-1"></div><div class="mark-row" id="mark-superstar-1">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,1,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,1,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-2">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">GENERAL KNOWLEDGE</span> Question 3 of 30 · 3 points</div>
+    <div class="q-text">Name all steps of OKI NI.</div><div class="open-hint">💡 There are 9 steps — from OKI Irasshaimase to OKI Mata Dozo.</div><textarea class="open-answer-area" id="ta-superstar-2" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-2">Check Answer →</button><div class="feedback-box" id="fb-superstar-2"></div><div class="mark-row" id="mark-superstar-2">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,2,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,2,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-3">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">GENERAL KNOWLEDGE</span> Question 4 of 30 · 2 points</div>
+    <div class="q-text">Explain what 'Omotenashi' means.</div><div class="open-hint">💡 Think: sincere Japanese hospitality, warmth, attentiveness and anticipating guest needs.</div><textarea class="open-answer-area" id="ta-superstar-3" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-3">Check Answer →</button><div class="feedback-box" id="fb-superstar-3"></div><div class="mark-row" id="mark-superstar-3">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,3,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,3,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-4">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">GENERAL KNOWLEDGE</span> Question 5 of 30 · 2 points</div>
+    <div class="q-text">What year did Sticks'n'Sushi start and which restaurant was first?</div><div class="open-hint">💡 Think: Copenhagen and the first original restaurant.</div><textarea class="open-answer-area" id="ta-superstar-4" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-4">Check Answer →</button><div class="feedback-box" id="fb-superstar-4"></div><div class="mark-row" id="mark-superstar-4">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,4,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,4,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-5">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 6 of 30 · 5 points</div>
+    <div class="q-text">Name the steps of 'Set the Scene' (High 5).</div><div class="open-hint">💡 There are 5 steps — from welcome to allergies.</div><textarea class="open-answer-area" id="ta-superstar-5" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-5">Check Answer →</button><div class="feedback-box" id="fb-superstar-5"></div><div class="mark-row" id="mark-superstar-5">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,5,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,5,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-6">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 7 of 30 · 3 points</div>
+    <div class="q-text">What does B.L.A.S.T stand for and what do we use it for?</div><div class="open-hint">💡 Used when handling complaints or unhappy guests.</div><textarea class="open-answer-area" id="ta-superstar-6" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-6">Check Answer →</button><div class="feedback-box" id="fb-superstar-6"></div><div class="mark-row" id="mark-superstar-6">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,6,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,6,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-7">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 8 of 30 · 3 points</div>
+    <div class="q-text">Name 3 examples of the 'Million Dollar Touch'.</div><div class="open-hint">💡 Think about small details that make service feel careful, clean and premium.</div><textarea class="open-answer-area" id="ta-superstar-7" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-7">Check Answer →</button><div class="feedback-box" id="fb-superstar-7"></div><div class="mark-row" id="mark-superstar-7">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,7,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,7,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-8">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 9 of 30 · 1 point</div>
+    <div class="q-text">What should you always do before serving dessert or bringing the bill?</div><div class="open-hint">💡 Think about the table.</div><textarea class="open-answer-area" id="ta-superstar-8" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-8">Check Answer →</button><div class="feedback-box" id="fb-superstar-8"></div><div class="mark-row" id="mark-superstar-8">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,8,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,8,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-9">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 10 of 30 · 2 points</div>
+    <div class="q-text">Explain the V.I.P. order at Sticks'n'Sushi.</div><div class="open-hint">💡 Think about who receives attention first.</div><textarea class="open-answer-area" id="ta-superstar-9" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-9">Check Answer →</button><div class="feedback-box" id="fb-superstar-9"></div><div class="mark-row" id="mark-superstar-9">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,9,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,9,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-10">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 11 of 30 · 2 points</div>
+    <div class="q-text">What does "Irasshaimase" represent in our service culture?</div><div class="open-hint">💡 Think about first impression, urgency and being seen.</div><textarea class="open-answer-area" id="ta-superstar-10" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-10">Check Answer →</button><div class="feedback-box" id="fb-superstar-10"></div><div class="mark-row" id="mark-superstar-10">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,10,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,10,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-11">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 12 of 30 · 1 point</div>
+    <div class="q-text">How long do we have to acknowledge a guest when they enter?</div><div class="open-hint">💡 As quickly as possible — there is a specific maximum time.</div><textarea class="open-answer-area" id="ta-superstar-11" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-11">Check Answer →</button><div class="feedback-box" id="fb-superstar-11"></div><div class="mark-row" id="mark-superstar-11">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,11,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,11,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-12">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 13 of 30 · 3 points</div>
+    <div class="q-text">What are some smiling points during service?</div><div class="open-hint">💡 Name moments where a genuine smile is expected.</div><textarea class="open-answer-area" id="ta-superstar-12" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-12">Check Answer →</button><div class="feedback-box" id="fb-superstar-12"></div><div class="mark-row" id="mark-superstar-12">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,12,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,12,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-13">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 14 of 30 · 1 point</div>
+    <div class="q-text">What does B.L.A.S.T help us solve?</div><div class="open-hint">💡 Think about guest problems and service recovery.</div><textarea class="open-answer-area" id="ta-superstar-13" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-13">Check Answer →</button><div class="feedback-box" id="fb-superstar-13"></div><div class="mark-row" id="mark-superstar-13">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,13,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,13,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-14">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">SERVICE</span> Question 15 of 30 · 2 points</div>
+    <div class="q-text">Describe what 'Guess the Guest' means.</div><div class="open-hint">💡 Think about guest type, mood, pace and needs.</div><textarea class="open-answer-area" id="ta-superstar-14" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-14">Check Answer →</button><div class="feedback-box" id="fb-superstar-14"></div><div class="mark-row" id="mark-superstar-14">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,14,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,14,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-15">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 16 of 30 · 2 points</div>
+    <div class="q-text">What is our Drink Promise and what is the timeframe?</div><div class="open-hint">💡 There are two timings: one for drinks and one for cocktails/tea.</div><textarea class="open-answer-area" id="ta-superstar-15" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-15">Check Answer →</button><div class="feedback-box" id="fb-superstar-15"></div><div class="mark-row" id="mark-superstar-15">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,15,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,15,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-16">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 17 of 30 · 3 points</div>
+    <div class="q-text">Name 3 house cocktails from our Kampai card.</div><div class="open-hint">💡 Open answer — name 3 cocktails.</div><textarea class="open-answer-area" id="ta-superstar-16" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-16">Check Answer →</button><div class="feedback-box" id="fb-superstar-16"></div><div class="mark-row" id="mark-superstar-16">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,16,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,16,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-17">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 18 of 30 · 2 points</div>
+    <div class="q-text">Why do we always pour drinks for guests?</div><div class="open-hint">💡 Think about tradition and guest experience.</div><textarea class="open-answer-area" id="ta-superstar-17" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-17">Check Answer →</button><div class="feedback-box" id="fb-superstar-17"></div><div class="mark-row" id="mark-superstar-17">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,17,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,17,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-18">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 19 of 30 · 1 point</div>
+    <div class="q-text">What should you always do after pouring a drink from a bottle?</div><div class="open-hint">💡 Think about how the bottle should face the guest.</div><textarea class="open-answer-area" id="ta-superstar-18" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-18">Check Answer →</button><div class="feedback-box" id="fb-superstar-18"></div><div class="mark-row" id="mark-superstar-18">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,18,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,18,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-19">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 20 of 30 · 1 point</div>
+    <div class="q-text">Name some wines we serve by the glass and describe their taste.</div><div class="open-hint">💡 Open answer — mention wine names and guest-friendly taste descriptions.</div><textarea class="open-answer-area" id="ta-superstar-19" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-19">Check Answer →</button><div class="feedback-box" id="fb-superstar-19"></div><div class="mark-row" id="mark-superstar-19">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,19,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,19,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-20">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 21 of 30 · 2 points</div>
+    <div class="q-text">Name 2 tea options we offer.</div><div class="open-hint">💡 Name two tea options from the menu.</div><textarea class="open-answer-area" id="ta-superstar-20" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-20">Check Answer →</button><div class="feedback-box" id="fb-superstar-20"></div><div class="mark-row" id="mark-superstar-20">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,20,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,20,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-21">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 22 of 30 · 2 points</div>
+    <div class="q-text">What is special about our water and what is it called?</div><div class="open-hint">💡 Think charcoal and natural purification.</div><textarea class="open-answer-area" id="ta-superstar-21" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-21">Check Answer →</button><div class="feedback-box" id="fb-superstar-21"></div><div class="mark-row" id="mark-superstar-21">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,21,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,21,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-22">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">DRINKS</span> Question 23 of 30 · 2 points</div>
+    <div class="q-text">Name 2 white wines we serve by the glass.</div><div class="open-hint">💡 Open answer — name two white wines.</div><textarea class="open-answer-area" id="ta-superstar-22" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-22">Check Answer →</button><div class="feedback-box" id="fb-superstar-22"></div><div class="mark-row" id="mark-superstar-22">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,22,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,22,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-23">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 24 of 30 · 3 points</div>
+    <div class="q-text">What does S.O.S stand for in the Food Promise?</div><div class="open-hint">💡 Three things every table needs.</div><textarea class="open-answer-area" id="ta-superstar-23" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-23">Check Answer →</button><div class="feedback-box" id="fb-superstar-23"></div><div class="mark-row" id="mark-superstar-23">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,23,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,23,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-24">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 25 of 30 · 3 points</div>
+    <div class="q-text">Name 2 signature rolls and their main ingredients.</div><div class="open-hint">💡 Must name the rolls and describe main ingredients.</div><textarea class="open-answer-area" id="ta-superstar-24" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-24">Check Answer →</button><div class="feedback-box" id="fb-superstar-24"></div><div class="mark-row" id="mark-superstar-24">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,24,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,24,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-25">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 26 of 30 · 1 point</div>
+    <div class="q-text">What is our Food Promise delivery time?</div><div class="open-hint">💡 Two timings: starters/snacks and sushi/sticks.</div><textarea class="open-answer-area" id="ta-superstar-25" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-25">Check Answer →</button><div class="feedback-box" id="fb-superstar-25"></div><div class="mark-row" id="mark-superstar-25">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,25,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,25,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-26">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 27 of 30 · 2 points</div>
+    <div class="q-text">Explain proper sushi etiquette.</div><div class="open-hint">💡 Think hands, dipping and ginger.</div><textarea class="open-answer-area" id="ta-superstar-26" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-26">Check Answer →</button><div class="feedback-box" id="fb-superstar-26"></div><div class="mark-row" id="mark-superstar-26">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,26,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,26,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-27">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 28 of 30 · 2 points</div>
+    <div class="q-text">What are the origins of Hiramasa and Maguro?</div><div class="open-hint">💡 Name country/origin for both.</div><textarea class="open-answer-area" id="ta-superstar-27" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-27">Check Answer →</button><div class="feedback-box" id="fb-superstar-27"></div><div class="mark-row" id="mark-superstar-27">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,27,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,27,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-28">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 29 of 30 · 1 point</div>
+    <div class="q-text">What does 'Shimeru' mean?</div><div class="open-hint">💡 Think availability.</div><textarea class="open-answer-area" id="ta-superstar-28" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-28">Check Answer →</button><div class="feedback-box" id="fb-superstar-28"></div><div class="mark-row" id="mark-superstar-28">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,28,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,28,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="question-card" id="qcard-superstar-29">
+    <div class="q-number"><span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:700;letter-spacing:0.1em;">FOOD</span> Question 30 of 30 · 3 points</div>
+    <div class="q-text">Name 2 ingredients in the Supreme Soya.</div><div class="open-hint">💡 Name the two key additions to soya.</div><textarea class="open-answer-area" id="ta-superstar-29" placeholder="Write your answer here..."></textarea><button class="q-submit-btn" id="sub-superstar-29">Check Answer →</button><div class="feedback-box" id="fb-superstar-29"></div><div class="mark-row" id="mark-superstar-29">
+      <button class="mark-btn known" onclick="markOpen(&#39;superstar&#39;,29,&#39;open-known&#39;)">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen(&#39;superstar&#39;,29,&#39;open-review&#39;)">↩ Need more practice</button></div></div><div class="results-screen" id="results-superstar"></div></div></div>
+  </section>
+</div>
+
+<footer class="footer-section">
+  <div class="footer-title">Keep<br>Growing.<br><span>Every Day.</span></div>
+  <p class="footer-sub">"Excellence is not a destination — it's a daily practice."</p>
+  <div class="footer-badge">Kaizen · 改善</div>
+  <div class="footer-values">
+    <span class="footer-value highlight">Excellence</span>
+    <span class="footer-value">·</span>
+    <span class="footer-value highlight">Mérydelser</span>
+    <span class="footer-value">·</span>
+    <span class="footer-value highlight">Kaizen</span>
+  </div>
+</footer>
+
+<script>
+const DAYS = [
+  {
+    id: 'day1',
+    label: 'Day 1',
+    title: 'Welcome & Foundation',
+    emoji: '🌸',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'mc',
+        text: 'What does "Irasshaimase" mean?',
+        options: ['Thank you for the meal', 'Welcome to our home', 'Goodbye', 'Sorry'],
+        correct: 1,
+        feedback: '"Irasshaimase" (いらっしゃいませ) is the Japanese greeting meaning "Welcome" — spoken with warmth to every guest who enters. It sets the entire tone of their visit.'
+      },
+      {
+        type: 'open',
+        text: 'Name our 3 core values and give a short description of each.',
+        hint: 'Think about the values that guide how we work, serve guests, improve every day, and go the extra mile.',
+        answer: 'Excellence — striving to be the best in everything we do.\nMérydelser — going above and beyond, the little extra that makes moments memorable.\nKaizen — continuous improvement, every day a little better than the last.',
+        focus: 'Core Values'
+      },
+      {
+        type: 'open',
+        text: 'Name the 9 steps of OKI NI (Set the Scene).',
+        hint: 'From IRASSHAIMASE to MATA DOZO — all 9 steps in order.',
+        answer: '1. OKI IRASSHAIMASE\n2. GUEST THE GUEST\n3. SET THE SCENE\n4. DRINK PROMISE\n5. FOOD PROMISE\n6. SERVICE \'N\' SECOND DRINK\n7. DCT (Dessert Card Trick)\n8. GUEST GRATITUDE\n9. OKI MATA DOZO',
+        focus: 'OKI NI 9 Steps'
+      },
+      {
+        type: 'open',
+        text: 'Name 2 smiling points during service.',
+        hint: 'These are specific moments where a genuine smile must always be present.',
+        answer: 'Examples: When giving Oshibori · When pouring a drink · Taking the order · Pouring soya · Serving and presenting food',
+        focus: 'Service Smiling Points'
+      },
+      {
+        type: 'open',
+        text: 'Give at least 2 examples of going "the extra mile" (Mérydelser) during service.',
+        hint: 'Think about small, unexpected gestures that make a guest feel truly seen.',
+        answer: 'Examples: Making the experience more special for children · Picking up a jacket from the floor · Complimenting a guest · Holding the door when they enter or leave',
+        focus: 'Mérydelser Examples'
+      }
+    ]
+  },
+  {
+    id: 'day2',
+    label: 'Day 2',
+    title: 'POS System & Omotenashi',
+    emoji: '🏮',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'open',
+        text: 'What does "Omotenashi" teach us about how we should treat our guests? Explain in your own words.',
+        hint: 'Think about attentiveness, reading the room, and selfless hospitality.',
+        answer: 'Omotenashi means hospitality. Omotenashi is Japanese for hospitality, which means to treat or entertain someone sincerely and warmheartedly. At the core of Omotenashi is attentiveness to the needs of others, by reading the atmosphere, sensing the mood and feeling the invisible energy. Ultimately, it means not entertaining a guest to achieve self-satisfaction, but to be quick in perceiving the guests’ needs, desires and overall mood — and acting accordingly. This is the time to stop for a few seconds and consider your guests’ needs and wants, which helps us personalise their experience and make it the best we possibly can — always memorable.',
+        focus: 'Omotenashi Philosophy'
+      },
+      {
+        type: 'mc',
+        text: 'What does SOS stand for at Sticks\'n\'Sushi?',
+        options: ['Soya, Oshibori, Sharing plate', 'Service, Order, Smile', 'Set, Offer, Serve', 'Start, Open, Suggest'],
+        correct: 0,
+        feedback: 'SOS = Soya, Oshibori, Sharing plate. Every guest needs their SOS before dining — Oshibori lets them "wash hands" and settle in before their experience begins.'
+      },
+      {
+        type: 'mc',
+        text: 'What does DCT stand for?',
+        options: ['Daily Customer Tracking', 'Dessert Card Trick / Dessert Coffee Tea', 'Drink Check Time', 'Direct Customer Touch'],
+        correct: 1,
+        feedback: 'DCT = Dessert Card Trick (or Dessert, Coffee, Tea). It\'s a key moment in the service flow — presenting dessert options proactively and artfully.'
+      },
+      {
+        type: 'open',
+        text: 'What Japanese words or phrases have you learned today? Write as many as you can.',
+        hint: 'Any Japanese hospitality phrases or words you remember — all count!',
+        answer: 'Examples: Irasshaimase (Welcome) · Mata dozo (Please come again) · Omotenashi (Hospitality) · Arigatou (Thank you) · Onegaishimasu (Please) · Shimeru (No longer available)',
+        focus: 'Japanese Vocabulary'
+      }
+    ]
+  },
+  {
+    id: 'day3',
+    label: 'Day 3',
+    title: 'Host Position & Fish Knowledge',
+    emoji: '🐟',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'open',
+        text: 'Briefly explain what "Guess the Guest" means and why it\'s important.',
+        hint: 'Think about signals, pace, privacy, and tailoring the experience.',
+        answer: 'Guess the Guest means reading visual and behavioural cues to understand how the guest wants to be treated — their pace, mood, occasion, and needs. Are they rushing? Celebrating? On a business meeting? Then act accordingly.',
+        focus: 'Guess the Guest'
+      },
+      {
+        type: 'mc',
+        text: 'Where does our Shake (salmon) come from?',
+        options: ['Scotland', 'Iceland', 'Norway', 'Denmark'],
+        correct: 2,
+        feedback: 'Our Shake (salmon) comes from Norway. Knowing the origin of each fish allows you to share the story with guests and build trust in the quality of what we serve.'
+      },
+      {
+        type: 'mc',
+        text: 'Where does our Hiramasa (yellowtail) come from?',
+        options: ['Japan', 'Denmark', 'Norway', 'Alaska'],
+        correct: 1,
+        feedback: 'Hiramasa comes from Denmark. Our fish origins: Shake → Norway · Hiramasa → Denmark · Gindara → Alaska · Kani → Iceland.'
+      },
+      {
+        type: 'mc',
+        text: 'If someone says "Hiramasa Kama is Shimeru," what does it mean?',
+        options: ['The Hiramasa is very fresh today', 'We are out of / no longer have this item', 'The Hiramasa is a special recommendation', 'It\'s time to order more Hiramasa'],
+        correct: 1,
+        feedback: '"Shimeru" means we no longer have this item in stock — it\'s sold out or unavailable. Always communicate this clearly and warmly to guests, offering an alternative.'
+      },
+      {
+        type: 'mc',
+        text: 'What is the VIP order when serving guests?',
+        options: ['Only wealthy guests get priority', 'Children first, then ladies, then men (by age)', 'Whoever ordered first', 'Adults first, then children'],
+        correct: 1,
+        feedback: 'At Sticks\'n\'Sushi, VIP order is: Children first (if any), then ladies, then men — in order of age where apparent. This applies to menus, oshibori, drinks, food, and attention.'
+      }
+    ]
+  },
+  {
+    id: 'day4',
+    label: 'Day 4',
+    title: 'Menus & Dressings',
+    emoji: '🍱',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'mc',
+        text: 'Which 2 à la carte starters contain Ponzu Soya?',
+        options: ['Seaweed Salad & Maguro Sashimi', 'Shake Tataki & Beef Tataki', 'Broccoli & Hotate Kataifi', 'Kani Koroke & Kinoko Koroke'],
+        correct: 1,
+        feedback: 'Shake Tataki and Beef Tataki both contain Ponzu Soya. Knowing dressings lets you answer allergy questions accurately and describe dishes with confidence.'
+      },
+      {
+        type: 'mc',
+        text: 'What dressing does the Kani Koroke contain?',
+        options: ['Miso Aioli', 'Ponzu Soya', 'Wasabi Caesar', 'Spicy Mayo'],
+        correct: 2,
+        feedback: 'Kani Koroke (crab croquette) is served with Wasabi Caesar. The other croquette — Kinoko Koroke — contains Miso Aioli, crystal cheese, and truffle dust.'
+      },
+      {
+        type: 'open',
+        text: 'Name 3 maki rolls that contain spicy sauce.',
+        hint: 'Think about the rolls with heat in them — "spicy" is a key descriptor.',
+        answer: 'Hell\'s Kitchen · Ebi Panko · Crispy Ebi — all contain spicy sauce. When a guest asks for something with a kick, these are your go-to suggestions.',
+        focus: 'Spicy Maki Rolls'
+      },
+      {
+        type: 'mc',
+        text: 'When presenting Sashimi Deluxe, what 2 things must you ALWAYS mention?',
+        options: ['Price and portion size', 'Supreme Soya for the sashimi & Ponzu for the china radish roll', 'The fish origins and freshness', 'The chef\'s recommendation and allergens'],
+        correct: 1,
+        feedback: 'Always mention: Supreme Soya for the sashimi, and Ponzu for the china radish roll. These are not optional — they\'re part of the Sashimi Deluxe experience every time.'
+      },
+      {
+        type: 'mc',
+        text: 'Supreme Soya consists of soya + 2 other ingredients. What are they?',
+        options: ['Chilli & Sesame', 'Ginger & Garlic', 'Wasabi & Mirin', 'Rice vinegar & Sake'],
+        correct: 1,
+        feedback: 'Supreme Soya = Soya + Ginger + Garlic. A simple but powerful combination that elevates the sashimi experience — worth mentioning to curious guests!'
+      }
+    ]
+  },
+  {
+    id: 'day5',
+    label: 'Day 5',
+    title: 'Service Flow & Drinks',
+    emoji: '🍹',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'mc',
+        text: 'What does B.L.A.S.T. stand for?',
+        options: [
+          'Be Loud And Stay Thankful',
+          'Believe, Listen, Apologies, Solve, Thank you',
+          'Brief, Light, Attentive, Smile, Trust',
+          'Bring, Lead, Answer, Serve, Teach'
+        ],
+        correct: 1,
+        feedback: 'B.L.A.S.T. = Believe · Listen · Apologies · Solve · Thank you. Use this framework when dealing with a guest who is unhappy or dissatisfied — it turns a difficult moment into loyalty.'
+      },
+      {
+        type: 'open',
+        text: 'What should you do if you hear "Kampai, Onegai" in the restaurant?',
+        hint: 'This is a signal from the bar — what does it mean for the floor team?',
+        answer: 'It means there are drinks ready at the bar. If you have time, go to the bar and help deliver finished drinks, soft drinks, and cocktails to the guests — it\'s a team effort.',
+        focus: 'Kampai Onegai Protocol'
+      },
+      {
+        type: 'open',
+        text: 'Name 2 drinks or cocktails that contain yuzu.',
+        hint: 'Yuzu is a Japanese citrus — think of refreshing, citrusy drinks on the menu.',
+        answer: 'Yuzu Lemonade · Yuzu Zoo · Yuzu Sour — all contain yuzu.',
+        focus: 'Yuzu Drinks'
+      },
+      {
+        type: 'open',
+        text: 'What is the story behind the Mama Mia Roll?',
+        hint: 'Think about one of our founders and a pregnancy craving...',
+        answer: 'Mia is the wife of Thor, one of our founders. While pregnant, she craved hosomaki with cucumber and avocado — but a hosomaki is too thin for both. So the Mama Mia Roll was invented. Mia and Thor have 3 children — so she was pregnant a long time! A loving mama to many.',
+        focus: 'Mama Mia Roll Story'
+      },
+      {
+        type: 'open',
+        text: 'Name 2 house cocktails from our menu (with 1–2 ingredients each).',
+        hint: 'Both alcoholic and non-alcoholic options count!',
+        answer: 'Any 2 cocktails from the Kampai card with at least 1–2 ingredients each. e.g. Geisha, Apuro Gin Sour',
+        focus: 'Cocktail Knowledge'
+      }
+    ]
+  },
+  {
+    id: 'day6',
+    label: 'Day 6',
+    title: 'Menu Mastery & Wine',
+    emoji: '🍷',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'open',
+        text: 'Name 3 different maki rolls, their main ingredients, and their dressing.',
+        hint: 'At least 3 rolls, 1–2 ingredients each, and 1 dressing minimum.',
+        answer: 'Example: Hell\'s Kitchen — spicy tuna, cucumber, spicy sauce · Mamma Mia — avocado, cucumber · Ebi Panko — tempura prawn, spicy sauce. Know at least 3 well enough to sell them.',
+        focus: 'Maki Roll Knowledge'
+      },
+      {
+        type: 'mc',
+        text: 'Does soy sauce contain gluten or alcohol?',
+        options: ['It contains gluten', 'It contains alcohol', 'It contains both gluten and alcohol', 'It contains neither'],
+        correct: 2,
+        feedback: 'Traditional soy sauce contains BOTH gluten (from wheat) and a small amount of alcohol (from fermentation). This is critical for allergy-conscious guests — always ask about dietary requirements.'
+      },
+      {
+        type: 'mc',
+        text: 'What is the difference between Champagne and Spumante?',
+        options: [
+          'Champagne is cheaper; Spumante is premium Italian',
+          'Champagne is only from the Champagne region of France (strict rules, complex). Spumante is a broad Italian category — lighter and fresher',
+          'They are the same thing, just different names',
+          'Champagne is white; Spumante can be rosé only'
+        ],
+        correct: 1,
+        feedback: 'Champagne = sparkling wine exclusively from the Champagne region of France, strict rules, complex character. Spumante = general Italian sparkling wine, broader category, often lighter and fresher. Both are beautiful — knowing the difference helps you guide guests.'
+      },
+      {
+        type: 'open',
+        text: 'Name 2 white wines we have by the glass. Describe each in your own words.',
+        hint: 'Your own words — guest-friendly language. Think about flavour, feeling, or food pairings.',
+        answer: 'Describe any 2 white wines by the glass in your own words — mention flavour notes, origin, or style. The goal is to be able to recommend them confidently to a guest without reading from the menu.',
+        focus: 'Wine by the Glass'
+      },
+      {
+        type: 'open',
+        text: 'What 2 key ingredients go into a Shojito?',
+        hint: 'Think Japanese twist on a classic cocktail...',
+        answer: 'Shochu (Japanese vodka) + Mint leaves + Sugar or fruit syrup (raspberry, rhubarb depending on the flavour). Shochu is the key — it\'s the Japanese spirit that gives the Shojito its identity.',
+        focus: 'Shojito Recipe'
+      }
+    ]
+  },
+  {
+    id: 'day7',
+    label: 'Day 7',
+    title: 'Integration & Independence',
+    emoji: '🎌',
+    color: '#6B1A2A',
+    questions: [
+      {
+        type: 'open',
+        text: 'What are the Japanese numbers 1–10? (Spelling mistakes are OK!)',
+        hint: 'ICHI, NI... take it from there!',
+        answer: '1 – Ichi · 2 – Ni · 3 – San · 4 – Yon · 5 – Go · 6 – Roku · 7 – Nana · 8 – Hachi · 9 – Kyuu · 10 – Juu',
+        focus: 'Japanese Numbers 1–10'
+      },
+      {
+        type: 'open',
+        text: 'How do you answer the phone at Sticks\'n\'Sushi?',
+        hint: 'There\'s a specific greeting formula — do you remember it?',
+        answer: '"Welcome to Sticks\'n\'Sushi, Borgergade, you are speaking with [name]. How may I help you?" — Always warm, always professional, always complete.',
+        focus: 'Phone Greeting'
+      },
+      {
+        type: 'open',
+        text: 'What should you do when you see guests standing at the front door?',
+        hint: 'Speed and warmth are both key here.',
+        answer: 'Approach the guest immediately — whether they are for take-away, eat-in, or bar. Make them feel seen right away. Show urgency, warmth, and love about the door. Never let a guest wait at the entrance unacknowledged.',
+        focus: 'Door Greeting Protocol'
+      },
+      {
+        type: 'open',
+        text: 'A table of 2 who love fish asks for a personal recommendation from the menu. What do you suggest and why?',
+        hint: 'Your genuine recommendation — explain your reasoning like you would to a real guest.',
+        answer: 'Any sincere recommendation with reasoning — show you can speak about the dish with knowledge and passion. Mention the fish, the preparation, the dressing, and why it suits fish lovers.',
+        focus: 'Personal Recommendation'
+      },
+      {
+        type: 'mc',
+        text: 'What does P&O stand for?',
+        options: ['Pour and Offer', 'Prepare and Organise', 'Plate and Order', 'Present and Observe'],
+        correct: 0,
+        feedback: 'P&O = Pour and Offer — a drinks-related action. Always pour and then offer more, proactively. Never wait for a guest to ask.'
+      },
+      {
+        type: 'mc',
+        text: 'What does SOS stand for at Sticks\'n\'Sushi?',
+        options: ['Set, Offer, Serve', 'Soya, Oshibori, Sharing plate', 'Smile, Order, Suggest', 'Standard Operating Service'],
+        correct: 1,
+        feedback: 'SOS = Soya, Oshibori, Sharing plate. Every guest at Sticks\'n\'Sushi should have their SOS before dining — it\'s a non-negotiable part of the experience.'
+      }
+    ]
+  }
+];
+
+const SUPERSTAR_DATA = {
+  id: 'superstar',
+  label: 'Super Star Quiz',
+  title: 'General Knowledge · Service · Drinks · Food',
+  emoji: '⭐',
+  isSuperstar: true,
+  totalPoints: 64,
+  passPoints: 51,
+  questions: [
+    {
+        "type": "open",
+        "category": "GENERAL KNOWLEDGE",
+        "points": 1,
+        "text": "What does 'Irasshaimase' mean?",
+        "hint": "Think about the first Japanese greeting we give when guests arrive.",
+        "answer": "Welcome to our home / Welcome — Japanese greeting to guests.",
+        "focus": "Irasshaimase"
+    },
+    {
+        "type": "open",
+        "category": "GENERAL KNOWLEDGE",
+        "points": 3,
+        "text": "Name the 3 core values of Sticks'n'Sushi.",
+        "hint": "Think about quality, going the extra mile, and continuous improvement.",
+        "answer": "Excellence – We strive for the highest quality.<br>Mérydelser – Going the extra mile for the guest.<br>Kaizen – Continuous improvement.",
+        "focus": "Core Values"
+    },
+    {
+        "type": "open",
+        "category": "GENERAL KNOWLEDGE",
+        "points": 3,
+        "text": "Name all steps of OKI NI.",
+        "hint": "There are 9 steps — from OKI Irasshaimase to OKI Mata Dozo.",
+        "answer": "1. OKI Irasshaimase<br>2. Guess the Guest<br>3. Set the Scene<br>4. Drink Promise<br>5. Food Promise<br>6. Service ’n’ Second Drink<br>7. DCT (Dessert, Coffee, Tea)<br>8. Guest Gratitude<br>9. OKI Mata Dozo",
+        "focus": "OKI NI Steps"
+    },
+    {
+        "type": "open",
+        "category": "GENERAL KNOWLEDGE",
+        "points": 2,
+        "text": "Explain what 'Omotenashi' means.",
+        "hint": "Think: sincere Japanese hospitality, warmth, attentiveness and anticipating guest needs.",
+        "answer": "Japanese hospitality: sincere, warm service where we anticipate guest needs and create a personal experience.",
+        "focus": "Omotenashi"
+    },
+    {
+        "type": "open",
+        "category": "GENERAL KNOWLEDGE",
+        "points": 2,
+        "text": "What year did Sticks'n'Sushi start and which restaurant was first?",
+        "hint": "Think: Copenhagen and the first original restaurant.",
+        "answer": "1994 – First restaurant in Copenhagen (Nansensgade).",
+        "focus": "Sticks’n’Sushi History"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 5,
+        "text": "Name the steps of 'Set the Scene' (High 5).",
+        "hint": "There are 5 steps — from welcome to allergies.",
+        "answer": "1. Welcome with Irasshaimase<br>2. Menu overview<br>3. Talk about favourites<br>4. Suggest drinks<br>5. Offer bites + check allergies",
+        "focus": "Set the Scene / High 5"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 3,
+        "text": "What does B.L.A.S.T stand for and what do we use it for?",
+        "hint": "Used when handling complaints or unhappy guests.",
+        "answer": "B – Believe<br>L – Listen<br>A – Apologize<br>S – Solve<br>T – Thank<br><br>Used to handle complaints and unhappy guests.",
+        "focus": "B.L.A.S.T"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 3,
+        "text": "Name 3 examples of the 'Million Dollar Touch'.",
+        "hint": "Think about small details that make service feel careful, clean and premium.",
+        "answer": "Handling items carefully<br>Keeping table clean and aesthetic<br>Presenting items with care and precision",
+        "focus": "Million Dollar Touch"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 1,
+        "text": "What should you always do before serving dessert or bringing the bill?",
+        "hint": "Think about the table.",
+        "answer": "Clean the table.",
+        "focus": "Table Maintenance"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 2,
+        "text": "Explain the V.I.P. order at Sticks'n'Sushi.",
+        "hint": "Think about who receives attention first.",
+        "answer": "Children → Ladies → Men (by age).",
+        "focus": "V.I.P. Order"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 2,
+        "text": "What does \"Irasshaimase\" represent in our service culture?",
+        "hint": "Think about first impression, urgency and being seen.",
+        "answer": "A warm welcome, sense of urgency and making guests feel seen and at home from the first moment.",
+        "focus": "Irasshaimase Service Culture"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 1,
+        "text": "How long do we have to acknowledge a guest when they enter?",
+        "hint": "As quickly as possible — there is a specific maximum time.",
+        "answer": "As quickly as possible – within 30 seconds.",
+        "focus": "Guest Acknowledgement"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 3,
+        "text": "What are some smiling points during service?",
+        "hint": "Name moments where a genuine smile is expected.",
+        "answer": "Oshibori<br>Pouring drinks<br>Serving food / taking order",
+        "focus": "Smiling Points"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 1,
+        "text": "What does B.L.A.S.T help us solve?",
+        "hint": "Think about guest problems and service recovery.",
+        "answer": "Guest complaints and service challenges using: Believe, Listen, Apologize, Solve, Thank.",
+        "focus": "Service Recovery"
+    },
+    {
+        "type": "open",
+        "category": "SERVICE",
+        "points": 2,
+        "text": "Describe what 'Guess the Guest' means.",
+        "hint": "Think about guest type, mood, pace and needs.",
+        "answer": "Understanding guest type, mood and needs and adapting service accordingly.",
+        "focus": "Guess the Guest"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 2,
+        "text": "What is our Drink Promise and what is the timeframe?",
+        "hint": "There are two timings: one for drinks and one for cocktails/tea.",
+        "answer": "5 minutes for drinks.<br>8–10 minutes for cocktails/tea.",
+        "focus": "Drink Promise"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 3,
+        "text": "Name 3 house cocktails from our Kampai card.",
+        "hint": "Open answer — name 3 cocktails.",
+        "answer": "Open answer – must name 3 cocktails. Approved / not approved by senpai.",
+        "focus": "House Cocktails"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 2,
+        "text": "Why do we always pour drinks for guests?",
+        "hint": "Think about tradition and guest experience.",
+        "answer": "Japanese tradition (respect) + creates interaction and better experience.",
+        "focus": "Pouring Drinks"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 1,
+        "text": "What should you always do after pouring a drink from a bottle?",
+        "hint": "Think about how the bottle should face the guest.",
+        "answer": "Place bottle with label facing the guest.",
+        "focus": "Bottle Presentation"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 1,
+        "text": "Name some wines we serve by the glass and describe their taste.",
+        "hint": "Open answer — mention wine names and guest-friendly taste descriptions.",
+        "answer": "Open answer – guest should describe wines + taste. Approved / not approved by senpai.",
+        "focus": "Wine by the Glass"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 2,
+        "text": "Name 2 tea options we offer.",
+        "hint": "Name two tea options from the menu.",
+        "answer": "Green tea<br>Other tea option",
+        "focus": "Tea Options"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 2,
+        "text": "What is special about our water and what is it called?",
+        "hint": "Think charcoal and natural purification.",
+        "answer": "Binchotan charcoal water – purifies naturally.",
+        "focus": "Binchotan Water"
+    },
+    {
+        "type": "open",
+        "category": "DRINKS",
+        "points": 2,
+        "text": "Name 2 white wines we serve by the glass.",
+        "hint": "Open answer — name two white wines.",
+        "answer": "Open answer – approved / not approved by senpai.",
+        "focus": "White Wine by the Glass"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 3,
+        "text": "What does S.O.S stand for in the Food Promise?",
+        "hint": "Three things every table needs.",
+        "answer": "Soya<br>Oshibori<br>Sharing plates",
+        "focus": "S.O.S"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 3,
+        "text": "Name 2 signature rolls and their main ingredients.",
+        "hint": "Must name the rolls and describe main ingredients.",
+        "answer": "Examples:<br>Crispy Ebi<br>Pink Alaska<br>Spicy Tuna<br>Chirashi Roll<br><br>Must name + describe ingredients.",
+        "focus": "Signature Rolls"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 1,
+        "text": "What is our Food Promise delivery time?",
+        "hint": "Two timings: starters/snacks and sushi/sticks.",
+        "answer": "10 minutes for starters/snacks.<br>25 minutes for sushi and sticks.",
+        "focus": "Food Promise"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 2,
+        "text": "Explain proper sushi etiquette.",
+        "hint": "Think hands, dipping and ginger.",
+        "answer": "Eat with hands.<br>Dip fish (not rice) in soya.<br>Use ginger between bites.",
+        "focus": "Sushi Etiquette"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 2,
+        "text": "What are the origins of Hiramasa and Maguro?",
+        "hint": "Name country/origin for both.",
+        "answer": "Hiramasa – Denmark.<br>Maguro – Korea.",
+        "focus": "Fish Origins"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 1,
+        "text": "What does 'Shimeru' mean?",
+        "hint": "Think availability.",
+        "answer": "Out of stock / not available.",
+        "focus": "Shimeru"
+    },
+    {
+        "type": "open",
+        "category": "FOOD",
+        "points": 3,
+        "text": "Name 2 ingredients in the Supreme Soya.",
+        "hint": "Name the two key additions to soya.",
+        "answer": "Garlic<br>Ginger",
+        "focus": "Supreme Soya"
+    }
+]
+};
+
+const ALL_DATA = [...DAYS, SUPERSTAR_DATA];
+
+const SUPERSTAR_ACCESS_CODE = 'FatFish13';
+let superstarUnlocked = false;
+
+const state = {};
+ALL_DATA.forEach(d => {
+  state[d.id] = {
+    current: 0,
+    answers: Array(d.questions.length).fill(null),
+    done: false
+  };
+});
+
+function buildUI() {
+  const pillsEl = document.getElementById('hero-pills');
+  ALL_DATA.forEach(d => {
+    const p = document.createElement('button');
+    p.className = 'hero-pill';
+    p.textContent = d.isSuperstar ? 'Super Star Quiz 🔒' : d.label;
+    p.onclick = () => {
+      document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => d.id === 'superstar' ? requestSuperstarAccess() : activateDay(d.id), 400);
+    };
+    pillsEl.appendChild(p);
+  });
+
+  const dotsEl = document.getElementById('nav-dots');
+  ALL_DATA.forEach((d, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot';
+    dot.id = 'dot-' + i;
+    dot.title = d.label;
+    dot.onclick = () => d.id === 'superstar' ? requestSuperstarAccess() : activateDay(d.id);
+    dotsEl.appendChild(dot);
+  });
+
+  const selectorEl = document.getElementById('day-selector');
+  DAYS.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'day-btn';
+    btn.id = 'daybtn-' + d.id;
+    btn.textContent = d.label;
+    btn.onclick = () => activateDay(d.id);
+    selectorEl.appendChild(btn);
+  });
+
+  const superstarBtn = document.createElement('button');
+  superstarBtn.className = 'day-btn master-btn';
+  superstarBtn.id = 'daybtn-superstar';
+  superstarBtn.textContent = 'Super Star Quiz 🔒';
+  superstarBtn.onclick = () => requestSuperstarAccess();
+  selectorEl.appendChild(superstarBtn);
+
+  const panelsEl = document.getElementById('quiz-panels');
+  ALL_DATA.forEach(d => {
+    const panel = buildPanel(d);
+    panelsEl.appendChild(panel);
+  });
+
+  activateDay('day1');
+}
+
+function buildPanel(d) {
+  const panel = document.createElement('div');
+  panel.className = 'quiz-panel';
+  panel.id = 'panel-' + d.id;
+
+  const banner = document.createElement('div');
+  banner.className = 'day-banner' + (d.isSuperstar ? ' master-banner' : '');
+  banner.innerHTML = `
+    <div class="day-banner-emoji">${d.emoji}</div>
+    <div>
+      <div class="day-banner-title">${d.isSuperstar ? 'Super Star Quiz' : d.label}</div>
+      <div class="day-banner-sub">${d.isSuperstar ? '30 questions · 64 points total · Pass requirement: 51 points (80%)' : d.questions.length + ' questions · Self-paced · Mobile friendly'}</div>
+    </div>`;
+  panel.appendChild(banner);
+
+  const progRow = document.createElement('div');
+  progRow.className = 'quiz-progress-row';
+  progRow.innerHTML = `
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-fill" id="qpf-${d.id}"></div></div>
+    <div class="quiz-progress-label" id="qpl-${d.id}">0 / ${d.questions.length}</div>`;
+  panel.appendChild(progRow);
+
+  const pipRow = document.createElement('div');
+  pipRow.className = 'q-pip-row';
+  pipRow.id = 'pips-' + d.id;
+  d.questions.forEach((_, i) => {
+    const pip = document.createElement('div');
+    pip.className = 'q-pip';
+    pip.id = `pip-${d.id}-${i}`;
+    pip.textContent = i + 1;
+    pipRow.appendChild(pip);
+  });
+  panel.appendChild(pipRow);
+
+  const legend = document.createElement('div');
+  legend.className = 'legend';
+  legend.innerHTML = `
+    <div class="legend-item"><div class="legend-dot" style="background:var(--correct)"></div> Correct</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wrong)"></div> Wrong / Review</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Open question</div>`;
+  panel.appendChild(legend);
+
+  d.questions.forEach((q, i) => {
+    const card = buildQuestionCard(d, q, i);
+    panel.appendChild(card);
+  });
+
+  const results = document.createElement('div');
+  results.className = 'results-screen';
+  results.id = 'results-' + d.id;
+  panel.appendChild(results);
+
+  return panel;
+}
+
+function buildQuestionCard(d, q, i) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = `qcard-${d.id}-${i}`;
+
+  const categoryTag = q.category ? `<span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.1em;">${q.category}</span> ` : '';
+  const dayTag = q.day ? `<span style="background:rgba(201,169,110,0.2);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.1em;">${q.day}</span> ` : '';
+  const pointTag = q.points ? ` · ${q.points} point${q.points > 1 ? 's' : ''}` : '';
+  card.innerHTML = `
+    <div class="q-number">${categoryTag}${dayTag}Question ${i + 1} of ${d.questions.length}${pointTag}</div>
+    <div class="q-text">${q.text}</div>`;
+
+  if (q.type === 'mc') {
+    const grid = document.createElement('div');
+    grid.className = 'options-grid';
+    grid.id = `opts-${d.id}-${i}`;
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.id = `opt-${d.id}-${i}-${oi}`;
+      btn.innerHTML = `<span class="opt-letter">${letters[oi]}</span><span>${opt}</span>`;
+      btn.onclick = () => handleMC(d, i, oi);
+      grid.appendChild(btn);
+    });
+    card.appendChild(grid);
+  } else {
+    const hint = document.createElement('div');
+    hint.className = 'open-hint';
+    hint.textContent = '💡 ' + q.hint;
+    card.appendChild(hint);
+
+    const ta = document.createElement('textarea');
+    ta.className = 'open-answer-area';
+    ta.id = `ta-${d.id}-${i}`;
+    ta.placeholder = 'Write your answer here...';
+    card.appendChild(ta);
+
+    const submitBtn = document.createElement('button');
+    submitBtn.className = 'q-submit-btn';
+    submitBtn.id = `sub-${d.id}-${i}`;
+    submitBtn.textContent = 'Check Answer →';
+    submitBtn.onclick = () => handleOpen(d, i);
+    card.appendChild(submitBtn);
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback-box';
+  fb.id = `fb-${d.id}-${i}`;
+  card.appendChild(fb);
+
+  if (q.type === 'open') {
+    const markRow = document.createElement('div');
+    markRow.className = 'mark-row';
+    markRow.id = `mark-${d.id}-${i}`;
+    markRow.innerHTML = `
+      <button class="mark-btn known" onclick="markOpen('${d.id}',${i},'open-known')">✓ Approved from senpai</button>
+      <button class="mark-btn review" onclick="markOpen('${d.id}',${i},'open-review')">↩ Need more practice</button>`;
+    card.appendChild(markRow);
+  }
+
+  return card;
+}
+
+function handleMC(d, qi, selected) {
+  const s = state[d.id];
+  if (s.answers[qi] !== null) return;
+
+  const q = d.questions[qi];
+  const isCorrect = selected === q.correct;
+  s.answers[qi] = isCorrect ? 'correct' : 'wrong';
+
+  q.options.forEach((_, oi) => {
+    const btn = document.getElementById(`opt-${d.id}-${qi}-${oi}`);
+    btn.disabled = true;
+    if (oi === q.correct) btn.classList.add('correct');
+    else if (oi === selected && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById(`fb-${d.id}-${qi}`);
+  fb.className = 'feedback-box visible ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = `<div class="feedback-title">${isCorrect ? '✓ Correct!' : '✗ Not quite'}</div>${q.feedback}`;
+
+  updatePip(d.id, qi, s.answers[qi]);
+  updateProgress(d);
+  checkDone(d);
+}
+
+function handleOpen(d, qi) {
+  const ta = document.getElementById(`ta-${d.id}-${qi}`);
+  if (!ta.value.trim()) {
+    ta.style.borderColor = 'var(--wrong)';
+    return;
+  }
+
+  ta.classList.add('answered');
+  ta.disabled = true;
+
+  const submitBtn = document.getElementById(`sub-${d.id}-${qi}`);
+  submitBtn.disabled = true;
+
+  const q = d.questions[qi];
+  const fb = document.getElementById(`fb-${d.id}-${qi}`);
+  fb.className = 'feedback-box visible open';
+  fb.innerHTML = `<div class="feedback-title">📋 Model Answer</div>${q.answer.replace(/\n/g, '<br>')}`;
+
+  const markRow = document.getElementById(`mark-${d.id}-${qi}`);
+  markRow.classList.add('visible');
+
+  updatePip(d.id, qi, 'open-pending');
+}
+
+function markOpen(dayId, qi, result) {
+  const s = state[dayId];
+  if (s.answers[qi] && s.answers[qi] !== 'open-pending') return;
+
+  s.answers[qi] = result;
+
+  const markRow = document.getElementById(`mark-${dayId}-${qi}`);
+  markRow.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('selected'));
+
+  const targetBtn = result === 'open-known'
+    ? markRow.querySelector('.known')
+    : markRow.querySelector('.review');
+
+  targetBtn.classList.add('selected');
+  markRow.querySelectorAll('.mark-btn').forEach(b => b.disabled = true);
+
+  const d = ALL_DATA.find(x => x.id === dayId);
+  updatePip(dayId, qi, result);
+  updateProgress(d);
+  checkDone(d);
+}
+
+function updatePip(dayId, qi, result) {
+  const pip = document.getElementById(`pip-${dayId}-${qi}`);
+  pip.className = 'q-pip ' + (result || '');
+}
+
+function updateProgress(d) {
+  const s = state[d.id];
+  const answered = s.answers.filter(a => a !== null && a !== 'open-pending').length;
+  const pct = (answered / d.questions.length) * 100;
+
+  document.getElementById(`qpf-${d.id}`).style.width = pct + '%';
+  document.getElementById(`qpl-${d.id}`).textContent = answered + ' / ' + d.questions.length;
+}
+
+function checkDone(d) {
+  const s = state[d.id];
+  const allAnswered = s.answers.every(a => a !== null && a !== 'open-pending');
+
+  if (allAnswered && !s.done) {
+    s.done = true;
+    setTimeout(() => showResults(d), 500);
+  }
+}
+
+function showResults(d) {
+  const s = state[d.id];
+
+  let correct, total, pct, scoreLabel;
+
+  if (d.isSuperstar) {
+    correct = s.answers.reduce((sum, ans, i) => {
+      const points = d.questions[i].points || 1;
+      return sum + ((ans === 'correct' || ans === 'open-known') ? points : 0);
+    }, 0);
+    total = d.totalPoints || d.questions.reduce((sum, q) => sum + (q.points || 1), 0);
+    pct = Math.round((correct / total) * 100);
+    scoreLabel = `${pct}% · ${correct}/${total} points · Pass requirement: ${d.passPoints || 51} points`;
+  } else {
+    correct = s.answers.filter(a => a === 'correct' || a === 'open-known').length;
+    total = d.questions.length;
+    pct = Math.round((correct / total) * 100);
+    scoreLabel = `${pct}% · ${d.label} complete`;
+  }
+
+  let emoji, title, msg;
+
+  if (d.isSuperstar && correct >= (d.passPoints || 51)) {
+    emoji = '⭐';
+    title = 'SUPER STAR PASSED!';
+    msg = 'Strong result — you reached the pass requirement. Check the overview below to see exactly where you are strongest and where to sharpen up.';
+  } else if (d.isSuperstar) {
+    emoji = '📚';
+    title = 'KEEP TRAINING!';
+    msg = 'You have not reached the pass requirement yet. Use the overview below to see what to read up on before trying again.';
+  } else if (pct === 100) {
+    emoji = '🏆';
+    title = 'PERFECT!';
+    msg = 'Incredible — a flawless round! You are ready for anything. Irasshaimase with confidence!';
+  } else if (pct >= 80) {
+    emoji = '🌟';
+    title = 'EXCELLENT!';
+    msg = 'You are showing real mastery. A couple of things to revisit, but you are on the right track. Kaizen!';
+  } else if (pct >= 60) {
+    emoji = '💪';
+    title = 'GOOD WORK!';
+    msg = 'Solid foundation! Keep reviewing the areas below and you will get there. Every day a little better — that is the spirit.';
+  } else if (pct >= 40) {
+    emoji = '📚';
+    title = 'KEEP GOING!';
+    msg = 'You are learning — and that is what matters. Focus on the areas below and run through this quiz again. Kaizen is the way!';
+  } else {
+    emoji = '🌱';
+    title = 'JUST STARTING';
+    msg = 'Every expert was once a beginner. Study the areas below and come back — you have got this!';
+  }
+
+  const focusAreas = [];
+  s.answers.forEach((ans, i) => {
+    if ((ans === 'wrong' || ans === 'open-review') && d.questions[i].focus) {
+      focusAreas.push(d.questions[i].focus);
+    }
+  });
+
+  let focusHTML = '';
+  if (focusAreas.length > 0) {
+    focusHTML = `<div class="focus-areas">
+      <div class="focus-title">Areas to revisit</div>
+      ${focusAreas.map(f => `<div class="focus-item"><span>↩</span><span>${f}</span></div>`).join('')}
+    </div>`;
+  }
+
+  let superstarInsightHTML = '';
+  if (d.isSuperstar) {
+    const categoryStats = {};
+    d.questions.forEach((q, i) => {
+      const category = q.category || 'GENERAL';
+      const points = q.points || 1;
+      if (!categoryStats[category]) categoryStats[category] = { total: 0, correct: 0, focus: [] };
+      categoryStats[category].total += points;
+
+      const ans = s.answers[i];
+      if (ans === 'correct' || ans === 'open-known') {
+        categoryStats[category].correct += points;
+      } else if ((ans === 'wrong' || ans === 'open-review') && q.focus) {
+        categoryStats[category].focus.push(q.focus);
+      }
+    });
+
+    const cards = Object.entries(categoryStats).map(([category, stat]) => {
+      const categoryPct = Math.round((stat.correct / stat.total) * 100);
+      let status = 'Strong area — keep maintaining it.';
+      if (categoryPct < 67) status = 'Needs focused review.';
+      else if (categoryPct < 80) status = 'Close — read up before retrying.';
+      else if (categoryPct < 100) status = 'Strong, with a few small gaps.';
+
+      return `
+        <div class="master-insight-card">
+          <div class="master-insight-day">${category}</div>
+          <div class="master-insight-score">${stat.correct}/${stat.total}</div>
+          <div class="master-insight-bar"><div class="master-insight-fill" style="width:${categoryPct}%"></div></div>
+          <div class="master-insight-status">${categoryPct}% · ${status}</div>
+        </div>`;
+    }).join('');
+
+    const weakFocus = Object.entries(categoryStats)
+      .filter(([_, stat]) => stat.correct < stat.total)
+      .map(([category, stat]) => {
+        const uniqueFocus = [...new Set(stat.focus)];
+        const detail = uniqueFocus.length ? uniqueFocus.join(' · ') : 'Review the questions you missed from this category.';
+        return `<div class="master-focus-list-item"><strong>${category}:</strong> ${detail}</div>`;
+      }).join('');
+
+    superstarInsightHTML = `
+      <div class="master-focus-list">
+        <div class="master-focus-list-title">Super Star Quiz Overview · Where are you sharp?</div>
+        <div class="master-insight-grid">${cards}</div>
+      </div>
+      ${weakFocus ? `<div class="master-focus-list">
+        <div class="master-focus-list-title">What should you read up on?</div>
+        ${weakFocus}
+      </div>` : `<div class="master-focus-list">
+        <div class="master-focus-list-title">What should you read up on?</div>
+        <div class="master-focus-list-item">Nothing specific — you completed the Super Star Quiz without gaps.</div>
+      </div>`}`;
+  }
+
+  const el = document.getElementById('results-' + d.id);
+  el.innerHTML = `
+    <div class="results-emoji">${emoji}</div>
+    <div class="results-title">${title}</div>
+    <div class="results-score">${correct}/${total}</div>
+    <div class="results-score-label">${scoreLabel}</div>
+    <div class="results-msg">${msg}</div>
+    ${superstarInsightHTML}
+    ${focusHTML}
+    <button class="results-retry" onclick="resetQuiz('${d.id}')">↩ Try Again</button>`;
+
+  el.classList.add('visible');
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetQuiz(dayId) {
+  const d = ALL_DATA.find(x => x.id === dayId);
+  state[dayId] = {
+    current: 0,
+    answers: Array(d.questions.length).fill(null),
+    done: false
+  };
+
+  const panel = document.getElementById('panel-' + dayId);
+  panel.remove();
+
+  const newPanel = buildPanel(d);
+  document.getElementById('quiz-panels').appendChild(newPanel);
+  newPanel.classList.add('active');
+
+  updateProgress(d);
+}
+
+
+function requestSuperstarAccess() {
+  if (superstarUnlocked) {
+    activateDay('superstar');
+    return;
+  }
+
+  const code = prompt('Enter access code to unlock Super Star Quiz:');
+
+  if (code === null) return;
+
+  if (code.trim() === SUPERSTAR_ACCESS_CODE) {
+    superstarUnlocked = true;
+    activateDay('superstar');
+  } else {
+    alert('Wrong access code. Ask your senpai for approval.');
+  }
+}
+
+function activateDay(id) {
+  ALL_DATA.forEach((d, i) => {
+    const panel = document.getElementById('panel-' + d.id);
+    const btn = document.getElementById('daybtn-' + d.id);
+    const dot = document.getElementById('dot-' + i);
+
+    if (d.id === id) {
+      panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (dot) dot.classList.add('active');
+    } else {
+      panel.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+      if (dot) dot.classList.remove('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = (scrolled / total * 100) + '%';
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+buildUI();
+
+setTimeout(() => {
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+}, 100);
+</script>
+
+
+</body></html>
